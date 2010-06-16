@@ -368,6 +368,10 @@ nav a:hover {
   padding-top: 10px;
 }
 
+.table {
+    margin-top: 20px;
+}
+
 .form fieldset {
   margin: 0 17px;
 }
