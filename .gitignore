@@ -7,6 +7,7 @@ Capfile
 /doc/
 rerun.txt
 Gemfile.lock
-.bundle/environment.rb
+.bundle/
 /tags
 vendor/cache
+.rvmrc

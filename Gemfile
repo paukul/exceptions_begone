@@ -4,25 +4,22 @@ source :gemcutter
 gem "rails", "2.3.5"
 
 gem "mysql"
-
-# gem "mislav-will_paginate", "2.3.11", :require => "will_paginate"
 gem "paginator", "1.1.1"
 gem "gemcutter", "0.5.0"
-gem "lukeredpath-simpleconfig", "1.0.2", :require => "simpleconfig"
-
+gem "simpleconfig", "1.0.2"
 gem "mongo", "0.19.3"
 gem "mongo_ext", "0.19.3"
 gem "jnunemaker-validatable"
-gem "mongo_mapper", "0.7.3", :require => "mongomapper"
+gem "mongo_mapper", "0.7.3"
 
 group :development do
-  gem "josevalim-rails-footnotes", :require => "rails-footnotes"
+  gem "rails-footnotes"
   gem "ruby-debug"
 end
 
 group :test do
   gem "redgreen"
-  gem "thoughtbot-factory_girl", "1.2.2", :require => "factory_girl"
+  gem "factory_girl", "1.2.2"
   gem "webrat", "0.6.0", :require => false
   gem "cucumber", "0.6.1", :require => false
   gem "rspec", "1.2.9", :require => false
@@ -36,5 +33,5 @@ group :cucumber do
   gem 'webrat',           '>=0.6.0' 
   gem 'rspec',            '>=1.2.9'
   gem 'rspec-rails',      '>=1.2.9' 
-  gem "thoughtbot-factory_girl", "1.2.2", :require => "factory_girl"
+  gem "factory_girl", "1.2.2"
 end
