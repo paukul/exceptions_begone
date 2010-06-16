@@ -1,8 +1,6 @@
-# A sample Gemfile
 source :gemcutter
-#
-gem "rails", "2.3.5"
 
+gem "rails", "2.3.5"
 gem "mysql"
 gem "paginator", "1.1.1"
 gem "gemcutter", "0.5.0"
