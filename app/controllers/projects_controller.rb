@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_filter :load_project
   
   def index
-    @projects = Project.paginate(:per_page => 10, :page => params[:page])
+    @projects = Project.all
   end
   
   def show

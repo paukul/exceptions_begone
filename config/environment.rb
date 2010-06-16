@@ -15,3 +15,6 @@ Rails::Initializer.run do |config|
 end
 
 require "paginator"
+
+Haml::Template.options[:ugly] = true
+Haml::Template.options[:attr_wrapper] = '"'

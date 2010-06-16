@@ -1,5 +1,7 @@
 class Stack 
   include MongoMapper::Document
+  cattr_reader :per_page
+  @@per_page = 10
 
   key :identifier, String
   key :status, Integer
@@ -19,7 +21,7 @@ class Stack
   # named_scope :exceeding_warning_threshold, lambda { |threshold| {:conditions => ["notifications_count > ?", threshold]} }
   # named_scope :warning_not_sent, :conditions => ["threshold_warning_sent != ?", true]
 
-  @@status_to_integer = {"incoming" => 0, "processing" => 1, "done" => 2}
+  @@status_to_integer = {"open" => 0, "in progress" => 1, "done" => 2}
   @@integer_to_status = @@status_to_integer.invert
    
   before_create do |record|
