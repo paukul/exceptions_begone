@@ -7,7 +7,7 @@
     = h stack.category
   %td
     = h stack.status
-    = h " (#{stack.user.username})" if stack.user
+    = h " (#{stack.username})" if stack.username
   %td
     = h stack.updated_at.to_s(:short)
   %td

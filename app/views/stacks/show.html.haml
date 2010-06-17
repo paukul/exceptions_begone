@@ -1,8 +1,6 @@
 %h1
   - title(true)
 
-= will_paginate @notifications
-
 %div{ :class => "stack" }
   %h3
     Project
@@ -27,7 +25,7 @@
       Status
     %dd
       = h @notification.stack.status
-      = h " (#{@notification.stack.user.username})" if @notification.stack.user
+      = h " (#{@notification.stack.username})" if @notification.stack.username
     %dt
       Updated at
     %dd
@@ -43,5 +41,3 @@
         = render :partial => "processing_actions", :locals => { :stack => @notification.stack }
 = render :partial => "section", :collection => @sections
 = render :partial => "backtrace", :object => @backtrace if @backtrace
-
-= will_paginate @notifications
