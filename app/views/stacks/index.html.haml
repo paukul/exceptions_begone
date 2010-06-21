@@ -27,7 +27,16 @@
         %li{ :class => "#{'active' if session[:per_page] == v.to_s}" }
           %a{ :href => project_stacks_path(@project, :per_page => v) }
             = v
-
+  .occured_since.option
+    %h3
+      Exceptions since
+      %span
+        = " (#{time_ago_in_words(session[:exceptions_since])})"
+    %ul
+      - [["1 day", 1.day.ago.to_i], ["1 hour", 1.hour.ago.to_i], ["5 minutes", 5.minutes.ago.to_i]].each do |k, v|
+        %li{ :class => "#{active if session[:exceptions_since].to_i == v}"}
+          %a{ :href => project_stacks_path(@project, :exceptions_since => v)}
+            = k
   = link_to "exclusions", project_exclusions_path(@project)
 
 %table{ :class => "table" }
@@ -48,7 +57,7 @@
       %th
         Identifier
       %th
-        \# today
+        \# #{time_ago_in_words(session[:exceptions_since])}
       %th
         \#
       %th

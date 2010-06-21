@@ -2,7 +2,7 @@
   %td{ :title => (h stack.identifier) }
     = link_to "#{h stack.identifier}", project_stack_path(@project, stack)
   %td
-    = h stack.last_occurred_at >= 1.day.ago ? stack.notifications.count(:created_at => {"$gt" => 1.day.ago}) : 0
+    = h number_of_exceptions_for_usertimeslice(stack)
   %td
     = h stack.notifications_count
   %td

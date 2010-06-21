@@ -7,6 +7,7 @@ class StacksController < ApplicationController
     "updated_at" => "updated_at DESC", "created_at" => "created_at DESC"}
   
   def index
+    session[:exceptions_since] = params[:exceptions_since].nil? ? session[:exceptions_since] || 1.day.ago : Time.at(params[:exceptions_since].to_i)
     order = @@order_possiblities.fetch(params[:order], "updated_at DESC")
     session[:filter] = params[:filter] ? params[:filter] : session[:filter] || "default"
     session[:per_page] = (params[:per_page] ? params[:per_page] : session[:per_page] || 50).to_i
