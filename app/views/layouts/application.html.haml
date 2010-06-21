@@ -15,5 +15,24 @@
         Exceptions <span>Begone</span>
     %nav
       %ul
+        %nav
+          %ul
+            %li
+              %a{ :href => projects_path }
+                Projects
+            - if current_user
+              %li
+                %a{ :href => edit_user_path(:current) }
+                  Edit profile
+              %li
+                %a{ :href => logout_path }
+                  Logout
+            - else
+              %li
+                %a{ :href => new_user_session_path }
+                  Login
+              / %li
+              /   %a{ :href => new_user_path }
+              /     Signup
     %section
       = yield

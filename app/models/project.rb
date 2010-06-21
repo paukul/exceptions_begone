@@ -11,7 +11,6 @@ class Project
 
   def find_stacks(search_query, filter, options = {})
     exclusion_patterns = exclusions.all(:enabled => true).map(&:pattern)
-
     if search_query
       stacks.all({:identifier => /#{search_query}/}.merge(options))
     elsif filter.present?

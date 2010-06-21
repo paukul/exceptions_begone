@@ -61,6 +61,14 @@
   %tfoot
     %tr
       %td{ :colspan => "7" }
-        / = will_paginate @stacks
   %tbody
     = render :partial => "stack", :collection => @stacks
+  .actions-bar
+    .actions
+    - if @stacks.prev?
+      = link_to("First", project_stacks_path(@project, :page => 1))
+      = link_to("Prev -", project_stacks_path(@project, :page => @stacks.prev.number))
+    ==Page #{@stacks.number}/#{@stacks.number_of_pages}
+    - if @stacks.next?
+      = link_to("- Next", project_stacks_path(@project, :page => @stacks.next.number))
+      = link_to("Last", project_stacks_path(@project, :page => @stacks.number_of_pages))
