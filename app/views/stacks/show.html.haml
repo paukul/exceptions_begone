@@ -1,5 +1,12 @@
 %h1
   - title(true)
+- if @notifications.prev?
+  = link_to("First", project_stack_path(@project, @stack, :page => 1))
+  = link_to("Prev -", project_stack_path(@project, @stack, :page => @notifications.prev.number))
+==Page #{@notifications.number}/#{@notifications.number_of_pages}
+- if @notifications.next?
+  = link_to("- Next", project_stack_path(@project, @stack, :page => @notifications.next.number))
+  = link_to("Last", project_stack_path(@project, @stack, :page => @notifications.number_of_pages))
 
 %div{ :class => "stack" }
   %h3
@@ -16,7 +23,7 @@
     %dt
       Amount
     %dd
-      = @notification.stack.notifications.size
+      = @notification.stack.notifications.count
     %dt
       Category
     %dd

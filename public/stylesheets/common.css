@@ -404,7 +404,8 @@ nav a:hover {
 /* =============================================================== COMMON = */
 
 .identifier { width: auto; }
-.amount { width: 50px; }
+.amount { width: 70px; }
+.amount_today { width: 100px; }
 .category { width: 100px; }
 .status { width: 125px; }
 .updated-at { width: 135px; }

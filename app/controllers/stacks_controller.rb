@@ -19,10 +19,10 @@ class StacksController < ApplicationController
   end
   
   def show
-    stack = Stack.find(params[:id])
+    @stack = Stack.find(params[:id])
     
-    @pager = Paginator.new(stack.notifications_count, 1) do |offset, per_page|
-      stack.notifications.all(:offset => offset, :limit => per_page, :order => "id ASC")
+    @pager = Paginator.new(@stack.notifications_count, 1) do |offset, per_page|
+      @stack.notifications.all(:offset => offset, :limit => per_page, :order => "id ASC")
     end
     
     @notifications = @pager.page(params[:page])
