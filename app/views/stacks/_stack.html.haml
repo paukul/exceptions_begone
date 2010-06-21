@@ -4,7 +4,7 @@
   %td
     = h stack.last_occurred_at >= 1.day.ago ? stack.notifications.count(:created_at => {"$gt" => 1.day.ago}) : 0
   %td
-    = h stack.notifications.count
+    = h stack.notifications_count
   %td
     = h stack.category
   %td
