@@ -2,7 +2,7 @@
   %td{ :title => (h stack.identifier) }
     = link_to "#{h stack.identifier}", project_stack_path(@project, stack)
   %td
-    = h stack.notifications.size
+    = h stack.notifications.count
   %td
     = h stack.category
   %td

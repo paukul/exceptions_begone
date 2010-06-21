@@ -2,7 +2,7 @@
   - remote_form_for [@project, stack], :html => { :id => "status-#{stack.id}" } do |f|
     %fieldset
       = f.hidden_field :status, :value => (stack.cycle_status)
-      = f.hidden_field :user_id, :value => current_user.id
+      = f.hidden_field :username, :value => current_user
       - submit_button stack.cycle_status
   - remote_form_for [@project, stack], :html => { :id => "abort-#{stack.id}" } do |f|
     %fieldset
