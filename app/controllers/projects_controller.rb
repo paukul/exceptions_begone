@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   
-  before_filter :load_project, :except => :index
+  before_filter :load_project, :only => [:update, :destroy, :show]
   
   def index
     @projects = Project.all

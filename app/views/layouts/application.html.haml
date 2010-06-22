@@ -5,8 +5,8 @@
       = title
     %meta{ :charset => "UTF-8" }
     %link{ :media => "all", :rel => "stylesheet", :type => "text/css", :href => "/stylesheets/common.css" }
-    - if @project && @project.id.present?
-      %link{ :rel => "alternate", :type => "application/atom+xml", :href => project_stacks_path(@project) }
+    - unless @project.nil? || @project.new_record?
+      %link{ :rel => "alternate", :type => "application/atom+xml", :href => project_stacks_path(:id => @project.to_param) }
 
   %body
     = render "/layouts/flash"

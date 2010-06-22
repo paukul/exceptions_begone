@@ -92,10 +92,6 @@ class Stack
       stacks.reject { |stack| stack.identifier =~ /\(ActionController::RoutingError\)/ && !stack.notifications.first.payload.include?("HTTP_REFERER") }
     end
     
-    def find_or_create(project, category, identifier)
-      find_or_create_by_project_id_and_category_and_identifier(project.id, category, identifier)
-    end
-
     def logger
       @@logger ||= Rails.logger
     end
@@ -108,12 +104,14 @@ class Stack
     self.save!
   end
 
+  alias_method :orig_status, :status
   def status
-    @@integer_to_status.fetch(super, @@integer_to_status[0])
+    @@integer_to_status.fetch(orig_status, @@integer_to_status[0])
   end
   
+  alias_method :orig_status=, :status=
   def status=(s)
-    self[:status] = s.is_a?(Integer) ? s : @@status_to_integer[s]
+    orig_status = s.is_a?(Integer) ? s : @@status_to_integer[s]
   end
   
   def cycle_status

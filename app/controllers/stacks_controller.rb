@@ -30,6 +30,7 @@ class StacksController < ApplicationController
     @notification = @notifications.first
     
     @sections = ActiveSupport::JSON.decode(@notification.payload)
+    @sections["Info"] = {"Occured at" => @notification.created_at }
     @backtrace = @sections.delete("backtrace")
     @backtrace = @backtrace.join("<br/>") if @backtrace.present?
   end
