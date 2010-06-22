@@ -1,4 +1,4 @@
-<% form_for [@project, @exclusion ||= Exclusion.new] do |f| %>
+<%= form_for [@project, @exclusion ||= Exclusion.new] do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :name %>

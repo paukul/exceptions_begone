@@ -2,31 +2,31 @@ class StacksController < ApplicationController
   
   before_filter :load_project
   
-  @@order_possiblities = {"category" => "category", "identifier" => "identifier", 
-    "count" => "notifications_count DESC", "status" => "status", 
-    "updated_at" => "updated_at DESC", "created_at" => "created_at DESC"}
+  @@order_possiblities = { 
+    "status"      => [:status,              :asc],
+    "category"    => [:category,            :asc],
+    "identifier"  => [:identifier,          :asc],
+    "updated_at"  => [:updated_at,          :desc],
+    "created_at"  => [:created_at,          :desc],
+    "count"       => [:notifications_count, :desc]
+  }
   
   def index
     session[:exceptions_since] = params[:exceptions_since].nil? ? session[:exceptions_since] || 1.day.ago : Time.at(params[:exceptions_since].to_i)
-    order = @@order_possiblities.fetch(params[:order], "updated_at DESC")
+    order_options    = @@order_possiblities.fetch(params[:order], [:updated_at, :desc])
     session[:filter] = params[:filter] ? params[:filter] : session[:filter] || "default"
-    session[:per_page] = (params[:per_page] ? params[:per_page] : session[:per_page] || 50).to_i
+    session[:per_page] = (params[:per_page] || session[:per_page] || 50).to_i
     matching_mode = params[:filter] == "include" ? :include : :exclude
 
-    @pager = Paginator.new(@project.stacks.count, session[:per_page]) do |offset, per_page|
-      @project.find_stacks(params[:search], session[:filter], :offset => offset, :limit => per_page, :order => order)
-    end
-    @stacks = @pager.page(params[:page])
+    pagination_opts = {:per_page => session[:per_page], :page => params[:page] || 1}
+    @stacks = @project.find_stacks(params[:search], session[:filter]).order_by(order_options).paginate(pagination_opts)
   end
   
   def show
     @stack = Stack.find(params[:id])
     
-    @pager = Paginator.new(@stack.notifications_count, 1) do |offset, per_page|
-      @stack.notifications.all(:offset => offset, :limit => per_page, :order => "id ASC")
-    end
+    @notifications = @stack.notifications.paginate(:per_page => 1, :page => params[:page])
     
-    @notifications = @pager.page(params[:page])
     @notification = @notifications.first
     
     @sections = ActiveSupport::JSON.decode(@notification.payload)

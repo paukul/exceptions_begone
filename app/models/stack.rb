@@ -1,21 +1,21 @@
 class Stack 
-  include MongoMapper::Document
+  include Mongoid::Document
+  include Mongoid::Timestamps
+
   cattr_reader :per_page
   @@per_page = 10
 
-  key :identifier, String
-  key :status, Integer
-  key :notifications_count, :default => 0
-  key :category
-  key :email_sent, Integer, :default => 0
-  key :threshold_warning_sent, Integer, :default => 0
-  key :last_occurred_at
-  key :username, String
+  field :identifier
+  field :status, :type => Integer
+  field :notifications_count, :type => Integer, :default => 0
+  field :category
+  field :email_sent, :type => Integer, :default => 0
+  field :threshold_warning_sent, :type => Integer, :default => 0
+  field :last_occurred_at, :type => DateTime
+  field :username, :type => String
   
-  timestamps!
-
-  belongs_to :project
-  many :notifications, :dependent => :destroy
+  belongs_to_related :project
+  has_many_related :notifications, :dependent => :destroy
     
   # named_scope :for_email_notifications, :conditions => {:email_sent => false}
   # named_scope :exceeding_warning_threshold, lambda { |threshold| {:conditions => ["notifications_count > ?", threshold]} }
@@ -58,7 +58,7 @@ class Stack
       when "in_progress"
         {:status => 1}
       else
-        {:status => {:$not => {:$in => [2]}}}
+        {:status.nin => [2]}
       end
     end
     
@@ -75,14 +75,14 @@ class Stack
 
     def stacks_awaiting_sending
       awaiting_stacks = []
-      Project.all.each do |project|
-        exclusion_patterns = project.exclusions.all(:enabled => true).map(&:pattern)
+      Project.find(:all).each do |project|
+        exclusion_patterns = project.exclusions.where(:enabled => true).map(&:pattern)
         if exclusion_patterns.present?
-          awaiting_stacks += project.stacks.all({:email_sent => 0, :identifier => {:$not => /#{exclusion_patterns.join('|')}/}})
-          awaiting_stacks += project.stacks.all(:identifier => {:$not => /#{exclusion_patterns.join('|')}/}, :threshold_warning_sent => 0, :notifications_count => {:$gt => project.warning_threshold})
+          awaiting_stacks += project.stacks.where({:email_sent => 0, :identifier.ne => /#{exclusion_patterns.join('|')}/})
+          awaiting_stacks += project.stacks.where(:identifier.ne => /#{exclusion_patterns.join('|')}/, :threshold_warning_sent => 0, :notifications_count.gt => project.warning_threshold)
         else
-          awaiting_stacks += project.stacks.all(:email_sent => 0)
-          awaiting_stacks += project.stacks.all(:threshold_warning_sent => 0, :notifications_count => {:$gt => project.warning_threshold})
+          awaiting_stacks += project.stacks.where(:email_sent => 0)
+          awaiting_stacks += project.stacks.where(:threshold_warning_sent => 0, :notifications_count.gt => project.warning_threshold)
         end
       end
       remove_routing_errors(awaiting_stacks)
@@ -97,7 +97,7 @@ class Stack
     end
 
     def logger
-      @@logger ||= RAILS_DEFAULT_LOGGER
+      @@logger ||= Rails.logger
     end
   end
   
@@ -109,7 +109,7 @@ class Stack
   end
 
   def status
-    @@integer_to_status.fetch(self[:status], @@integer_to_status[0])
+    @@integer_to_status.fetch(super, @@integer_to_status[0])
   end
   
   def status=(s)

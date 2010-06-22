@@ -1,18 +1,18 @@
 %tr{ :class => (h stack.status) }
   %td{ :title => (h stack.identifier) }
-    = link_to "#{h stack.identifier}", project_stack_path(@project, stack)
+    = link_to "#{stack.identifier}", project_stack_path(@project, stack)
   %td
-    = h number_of_exceptions_for_usertimeslice(stack)
+    = number_of_exceptions_for_usertimeslice(stack)
   %td
-    = h stack.notifications_count
+    = stack.notifications_count
   %td
-    = h stack.category
+    = stack.category
   %td
-    = h stack.status
-    = h " (#{stack.username})" if stack.username
+    = stack.status
+    =" (#{stack.username})" if stack.username
   %td
-    = h stack.updated_at.to_s(:short)
+    = stack.updated_at.to_s(:short)
   %td
-    = h stack.last_occurred_at.to_s(:short)
+    = stack.last_occurred_at.to_s(:short)
   %td{ :class => "action" }
     = render :partial => "processing_actions", :locals => { :stack => stack }

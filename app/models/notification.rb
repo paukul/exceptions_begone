@@ -1,12 +1,15 @@
 class Notification 
-  include MongoMapper::Document
+  include Mongoid::Document
+  include Mongoid::Timestamps
 
-  key :identifier
-  key :payload
-  key :status
-  timestamps!
+  field :identifier, :type => String
+  field :payload, :type => String
+  field :status, :type => String
+  index :created_at
+  index :status
+  index :project_id
 
-  belongs_to :stack #, :counter_cache => true, :touch => :last_occured_at
+  belongs_to_related :stack #, :counter_cache => true, :touch => :last_occured_at
 
   after_create do |record|
     record.stack.notifications_count += 1

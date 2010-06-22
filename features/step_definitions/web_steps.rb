@@ -51,7 +51,7 @@ end
 # based on naming conventions.
 #
 When /^(?:|I )fill in the following:$/ do |fields|
-  fields.rows_hash.each do |name, value|
+  fields.rows_hash.each do |name, , :type => value|
     When %{I fill in "#{name}" with "#{value}"}
   end
 end

@@ -1,14 +1,9 @@
 source :gemcutter
 
 gem "rails", "3.0.0.beta4"
-gem "mysql"
-gem "paginator"
-gem "gemcutter"
-gem "simpleconfig"
-gem "mongo"
-gem "mongo_ext"
-gem "bson_ext"
-gem "mongo_mapper"
+gem "mongoid", ">2.0.0.beta6"
+gem "bson_ext", "1.0.1"
+gem "will_paginate", ">=3.0.pre"
 gem "haml"
 
 group :development do

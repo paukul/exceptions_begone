@@ -1,6 +1,4 @@
-# Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
   def submit_button(name)
     haml_tag :button, :type => "submit" do
       haml_tag :span, :class => "button" do
@@ -25,5 +23,5 @@ module ApplicationHelper
       "Exceptions Begone"
     end
   end
-
+  
 end

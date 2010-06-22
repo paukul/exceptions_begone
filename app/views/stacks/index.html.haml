@@ -2,7 +2,7 @@
   %h2
     Options
 
-  - form_tag project_stacks_url(@project, @stack), :method => "get" do
+  = form_tag project_stacks_url(@project, @stack), :method => "get" do
     = text_field_tag "search", params[:search]
     = submit_tag "Search"
 
@@ -34,10 +34,14 @@
         = " (#{time_ago_in_words(session[:exceptions_since])})"
     %ul
       - [["1 day", 1.day.ago.to_i], ["1 hour", 1.hour.ago.to_i], ["5 minutes", 5.minutes.ago.to_i]].each do |k, v|
-        %li{ :class => "#{active if session[:exceptions_since].to_i == v}"}
+        %li{ :class => "#{'active' if session[:exceptions_since].to_i == v}"}
           %a{ :href => project_stacks_path(@project, :exceptions_since => v)}
             = k
   = link_to "exclusions", project_exclusions_path(@project)
+
+.actions-bar
+  .actions
+    = will_paginate(@stacks)
 
 %table{ :class => "table" }
   %caption
@@ -75,12 +79,3 @@
       %td{ :colspan => "7" }
   %tbody
     = render :partial => "stack", :collection => @stacks
-  .actions-bar
-    .actions
-    - if @stacks.prev?
-      = link_to("First", project_stacks_path(@project, :page => 1))
-      = link_to("Prev -", project_stacks_path(@project, :page => @stacks.prev.number))
-    ==Page #{@stacks.number}/#{@stacks.number_of_pages}
-    - if @stacks.next?
-      = link_to("- Next", project_stacks_path(@project, :page => @stacks.next.number))
-      = link_to("Last", project_stacks_path(@project, :page => @stacks.number_of_pages))

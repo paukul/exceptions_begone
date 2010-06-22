@@ -1,12 +1,12 @@
 class Exclusion
-  include MongoMapper::Document
-  
-  key :name
-  key :enabled, Boolean, :default => false
-  key :pattern
-  timestamps!
+  include Mongoid::Document
+  include Mongoid::Timestamps  
 
-  belongs_to :project
+  field :name, :type => String
+  field :enabled, :type => Boolean, :default => false
+  field :pattern, :type => String
+
+  belongs_to_related :project
   
   validates_presence_of :name
   validates_presence_of :pattern

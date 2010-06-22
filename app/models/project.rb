@@ -1,26 +1,26 @@
 class Project
-  include MongoMapper::Document
+  include Mongoid::Document
+  include Mongoid::Timestamps
 
-  key :name
-  key :description
-  key :warning_threshold, Integer, :default => 10
-  timestamps!
+  field :name
+  field :description
+  field :warning_threshold, :type => Integer, :default => 10
 
-  many :stacks
-  many :exclusions
+  has_many_related :stacks
+  has_many_related :exclusions
 
   def find_stacks(search_query, filter, options = {})
-    exclusion_patterns = exclusions.all(:enabled => true).map(&:pattern)
+    exclusion_patterns = exclusions.where(:enabled => true).map(&:pattern)
     if search_query
-      stacks.all({:identifier => /#{search_query}/}.merge(options))
+      stacks.where({:identifier => /#{search_query}/}.merge(options))
     elsif filter.present?
       if exclusion_patterns.present?
-        stacks.all({:identifier => {:$not => /#{exclusion_patterns.join('|')}/}}.merge(Stack.condition_for_filter(filter)).merge(options))
+        stacks.where({:identifier.ne => /#{exclusion_patterns.join('|')}/}.merge(Stack.condition_for_filter(filter)).merge(options))
       else
-        stacks.all(Stack.condition_for_filter(filter).merge(options))
+        stacks.where(Stack.condition_for_filter(filter).merge(options))
       end
     else
-      stacks.all(options)
+      stacks.where(options)
     end
   end
 end

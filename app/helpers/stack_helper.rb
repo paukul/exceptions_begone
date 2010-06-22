@@ -16,7 +16,7 @@ module StackHelper
   end
   
   def number_of_exceptions_for_usertimeslice(stack)
-    stack.last_occurred_at >= session[:exceptions_since] ? stack.notifications.count(:created_at => {"$gt" => session[:exceptions_since]}) : 0
+    stack.last_occurred_at >= session[:exceptions_since] ? stack.notifications.where(:created_at.gt => session[:exceptions_since].utc).count : 0
   end
 
 end
