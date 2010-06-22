@@ -2,7 +2,7 @@
   %td{ :title => (h stack.identifier) }
     = link_to "#{stack.identifier}", project_stack_path(@project, stack)
   %td
-    = number_of_exceptions_for_usertimeslice(stack)
+    = @recents[stack.id] || 0
   %td
     = stack.notifications_count
   %td
@@ -11,7 +11,7 @@
     = stack.status
     =" (#{stack.username})" if stack.username
   %td
-    = stack.updated_at.to_s(:short)
+    = stack.created_at.to_s(:short)
   %td
     = stack.last_occurred_at.to_s(:short)
   %td{ :class => "action" }

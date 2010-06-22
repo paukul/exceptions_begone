@@ -12,7 +12,7 @@ class StacksController < ApplicationController
   }
   
   def index
-    session[:exceptions_since] = params[:exceptions_since].nil? ? session[:exceptions_since] || 1.day.ago : Time.at(params[:exceptions_since].to_i)
+    session[:exceptions_since] = params[:exceptions_since].blank? ? session[:exceptions_since] || 1.day.ago : Time.at(params[:exceptions_since].to_i)
     order_options    = @@order_possiblities.fetch(params[:order], [:updated_at, :desc])
     session[:filter] = params[:filter] ? params[:filter] : session[:filter] || "default"
     session[:per_page] = (params[:per_page] || session[:per_page] || 50).to_i
@@ -20,6 +20,9 @@ class StacksController < ApplicationController
 
     pagination_opts = {:per_page => session[:per_page], :page => params[:page] || 1}
     @stacks = @project.find_stacks(params[:search], session[:filter]).order_by(order_options).paginate(pagination_opts)
+    
+    aggregation = Notification.only(:stack_id).where(:created_at.gt => session[:exceptions_since].utc).in(@stacks.map(&:id)).aggregate
+    @recents = aggregation.inject({}) {|ret, obj| ret[obj["stack_id"]] = obj["count"]; ret}
   end
   
   def show

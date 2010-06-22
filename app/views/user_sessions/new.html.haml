@@ -1,11 +1,11 @@
-- form_for @user_session, :url => user_sessions_path, :html => { :method => :post, :class => "login form" } do |f|
+= form_tag user_sessions_path, :method => :post, :class => "login form" do |f|
   %fieldset
     %legend
       %span
         Login
     %ul
       %li
-        = f.label :username, "Username"
-        = f.text_field :username
+        = label_tag "user[username]", "Username"
+        = text_field_tag "user[username]"
   %fieldset
     - submit_button "Login"

@@ -7,7 +7,7 @@ class UserSessionsController < ApplicationController
   end
   
   def create
-    cookies[:current_user] = params[:open_struct][:username]
+    cookies[:current_user] = params[:user][:username]
     flash[:notice] = "Logged in"
     redirect_to root_url
   end

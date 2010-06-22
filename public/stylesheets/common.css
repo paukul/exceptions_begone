@@ -408,7 +408,7 @@ nav a:hover {
 .amount_today { width: 100px; }
 .category { width: 100px; }
 .status { width: 125px; }
-.updated-at { width: 135px; }
+.created-at { width: 135px; }
 .last-occured-at { width: 135px; }
 .action { width: 190px; }
 
