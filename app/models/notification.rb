@@ -7,7 +7,7 @@ class Notification
   field :status, :type => String
   index :created_at
   index :status
-  index :project_id
+  index :stack_id
 
   belongs_to_related :stack #, :counter_cache => true, :touch => :last_occured_at
 

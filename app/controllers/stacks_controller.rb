@@ -21,7 +21,7 @@ class StacksController < ApplicationController
     pagination_opts = {:per_page => session[:per_page], :page => params[:page] || 1}
     @stacks = @project.find_stacks(params[:search], session[:filter]).order_by(order_options).paginate(pagination_opts)
     
-    aggregation = Notification.only(:stack_id).where(:created_at.gt => session[:exceptions_since].utc).in(@stacks.map(&:id)).aggregate
+    aggregation = Notification.only(:stack_id).where(:created_at.gt => session[:exceptions_since].utc).in(:stack_id => @stacks.map(&:id)).aggregate
     @recents = aggregation.inject({}) {|ret, obj| ret[obj["stack_id"]] = obj["count"]; ret}
   end
   
