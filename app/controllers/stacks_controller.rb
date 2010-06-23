@@ -48,6 +48,7 @@ class StacksController < ApplicationController
         format.html { redirect_to project_stacks_url(@project) }
       end
     else
+      flash[:error] = "woops, couldn't update the stack"
       redirect_to project_stacks_url(@project)
     end
   end

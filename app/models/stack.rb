@@ -112,7 +112,7 @@ class Stack
   
   alias_method :orig_status=, :status=
   def status=(s)
-    orig_status = s.is_a?(Integer) ? s : @@status_to_integer[s]
+    self.orig_status = s.is_a?(Integer) ? s : @@status_to_integer[s]
   end
   
   def cycle_status
