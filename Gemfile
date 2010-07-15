@@ -2,13 +2,14 @@ source :gemcutter
 
 gem "rails", "3.0.0.beta4"
 gem "mongoid", ">2.0.0.beta6"
-gem "bson_ext", "1.0.1"
+gem "bson_ext", ">=1.0.4"
 gem "will_paginate", ">=3.0.pre"
 gem "haml"
 
 group :development do
   # gem "rails-footnotes"
-  gem "ruby-debug"
+  # gem "ruby-debug"
+  gem "mongrel"
 end
 
 group :test do

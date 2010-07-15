@@ -21,6 +21,7 @@ class Notification
 
     notification = self.new(:payload => payload, :identifier => identifier)
     notification.stack = Stack.find_or_create_by(:project_id => project.id, :category => parameters[:category], :identifier => replace_numbers(identifier))
+    notification.stack.example ||= parameters[:identifier]
 
     if notification.stack.status == "done"
       notification.stack.reset_status!
@@ -32,6 +33,8 @@ class Notification
   private 
 
   def self.replace_numbers(identifier)
-    identifier.gsub(/(\d)+/, '%s')
+    fingerprint = identifier.gsub(/(#<[^:]|[\S:{2}]+:)(\dx[^>]+)/) {|s| $1 + '[OBJECT_ID]'}
+    fingerprint = fingerprint.gsub(/(\d)+/, '[NUMBER]')
+    fingerprint
   end
 end

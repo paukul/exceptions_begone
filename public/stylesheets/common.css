@@ -350,7 +350,7 @@ nav a:hover {
   border-width: 1px;
   margin: 0 2px;
   overflow: hidden;
-  padding: 4px 5px;
+  padding: 0px 2px;
   vertical-align: middle;
   height: 34px;
   white-space: nowrap;
@@ -370,6 +370,10 @@ nav a:hover {
 
 .table {
     margin-top: 20px;
+}
+
+.table tr.stack {
+  font-size: 11px;
 }
 
 .form fieldset {
@@ -408,8 +412,8 @@ nav a:hover {
 .amount_today { width: 100px; }
 .category { width: 100px; }
 .status { width: 125px; }
-.created-at { width: 135px; }
-.last-occured-at { width: 135px; }
+.created-at { width: 115px; }
+.last-occured-at { width: 125px; }
 .action { width: 190px; }
 
 .option {

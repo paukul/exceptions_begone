@@ -1,5 +1,5 @@
-%tr{ :class => (h stack.status) }
-  %td{ :title => (h stack.identifier) }
+%tr{ :class => "#{stack.status} stack" }
+  %td{ :title => stack.identifier }
     = link_to "#{stack.identifier}", project_stack_path(@project, stack)
   %td
     = @recents[stack.id].to_i || 0

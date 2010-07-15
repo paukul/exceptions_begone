@@ -13,6 +13,7 @@ class Stack
   field :threshold_warning_sent, :type => Integer, :default => 0
   field :last_occurred_at, :type => DateTime
   field :username, :type => String
+  field :example, :type => String
   index :project_id
 
   belongs_to_related :project
