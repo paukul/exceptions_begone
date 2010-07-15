@@ -33,7 +33,8 @@ class Notification
   private 
 
   def self.replace_numbers(identifier)
-    fingerprint = identifier.gsub(/(#<[^:]|[\S:{2}]+:)(\dx[^>]+)/) {|s| $1 + '[OBJECT_ID]'}
+    fingerprint = identifier.gsub(/(@[\S]+=)(\S+)(,)?/) {"#{$1}[IVAR]#{$3}"}
+    fingerprint = fingerprint.gsub(/(#<[^:]|[\S:{2}]+:)(\dx[\da-f]+)(.*)$/) {|s| $1 + '[OBJECT_ID]' + $3}
     fingerprint = fingerprint.gsub(/(\d)+/, '[NUMBER]')
     fingerprint
   end
