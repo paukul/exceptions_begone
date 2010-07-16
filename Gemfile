@@ -5,6 +5,7 @@ gem "mongoid", ">2.0.0.beta6"
 gem "bson_ext", ">=1.0.4"
 gem "will_paginate", ">=3.0.pre"
 gem "haml"
+gem "whenever"
 
 group :development do
   # gem "rails-footnotes"
