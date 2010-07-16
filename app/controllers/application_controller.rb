@@ -13,8 +13,10 @@ class ApplicationController < ActionController::Base
   def load_project
     project_id = params[:project_id] ? params[:project_id] : params[:id]
 
-    @project = Project.find(project_id)
-
+    @project = Project.find(:first, :conditions => {:name => project_id})
+    unless @project
+       @project = Project.find(project_id)
+    end
   end
   
 end
